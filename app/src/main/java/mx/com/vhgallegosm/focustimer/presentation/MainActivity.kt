@@ -1,4 +1,4 @@
-package mx.com.vhgallegosm.focustimer
+package mx.com.vhgallegosm.focustimer.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,7 +13,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import mx.com.vhgallegosm.focustimer.ui.theme.FocusTimerTheme
+import mx.com.vhgallegosm.focustimer.presentation.theme.FocusTimerTheme
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

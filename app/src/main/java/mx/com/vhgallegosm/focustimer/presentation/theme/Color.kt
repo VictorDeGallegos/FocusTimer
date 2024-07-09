@@ -1,4 +1,4 @@
-package mx.com.vhgallegosm.focustimer.ui.theme
+package mx.com.vhgallegosm.focustimer.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
