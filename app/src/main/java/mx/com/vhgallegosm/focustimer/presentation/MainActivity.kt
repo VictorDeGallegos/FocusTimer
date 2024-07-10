@@ -10,8 +10,10 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import mx.com.vhgallegosm.focustimer.presentation.home.HomeScreen
+import mx.com.vhgallegosm.focustimer.presentation.home.HomeScreenViewModel
 import mx.com.vhgallegosm.focustimer.presentation.theme.FocusTimerTheme
 
+internal val viewModel: HomeScreenViewModel = HomeScreenViewModel()
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.surface
                 ) {
-                    HomeScreen()
+                    HomeScreen(viewModel)
                 }
             }
         }
