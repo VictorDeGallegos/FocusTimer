@@ -66,17 +66,26 @@ class HomeScreenViewModel : ViewModel() {
     }
 
     fun onIncreaseTime() {
+        val wasActive = isTimerActive.value
+        if (wasActive) {
+            timer?.cancel()
+        }
         _timerValue.value += ONE_MIN_IN_MILLIS
-        if (isTimerActive.value) {
+        if (wasActive) {
             onStartTimer()
         }
     }
 
     fun onDecreaseTime() {
+        val wasActive = isTimerActive.value
+        if (wasActive) {
+            timer?.cancel()
+        }
         _timerValue.value -= ONE_MIN_IN_MILLIS
         if (_timerValue.value < 0) {
-            onCancelTimer()
-        } else if (isTimerActive.value) {
+            _timerValue.value = 0
+        }
+        if (wasActive) {
             onStartTimer()
         }
     }
