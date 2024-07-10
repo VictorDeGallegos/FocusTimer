@@ -103,11 +103,15 @@ fun HomeScreen(viewModel: HomeScreenViewModel = HomeScreenViewModel()) {
             verticalArrangement = Arrangement.Center
         ) {
             CustomButton(
-                text = "Start",
+                text = if (viewModel.isTimerActive.value) "Pausar" else "Start",
                 textColor = MaterialTheme.colorScheme.surface,
-                buttonColor = MaterialTheme.colorScheme.primary,
+                buttonColor = if (viewModel.isTimerActive.value) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
                 onTap = {
-                    viewModel.onStartTimer()
+                    if (viewModel.isTimerActive.value) {
+                        viewModel.onCancelTimer()
+                    } else {
+                        viewModel.onStartTimer()
+                    }
                 }
             )
             CustomButton(

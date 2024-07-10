@@ -13,9 +13,9 @@ import mx.com.vhgallegosm.focustimer.core.Constants.Companion.ONE_SEC_IN_MILLIS
 import mx.com.vhgallegosm.focustimer.domain.model.TimerTypeEnum
 
 class HomeScreenViewModel : ViewModel() {
-    private lateinit var timer: CountDownTimer
+    private var timer: CountDownTimer? = null
 
-    private var isTimerActive: Boolean = false
+    var isTimerActive = mutableStateOf(false)
 
     private val _timerValue = mutableStateOf(TimerTypeEnum.FOCUS.timeToMillis())
     val timerValueState = _timerValue
@@ -43,31 +43,21 @@ class HomeScreenViewModel : ViewModel() {
                 override fun onFinish() {
                     onCancelTimer()
                 }
-            }
-            timer.start().also {
-                if (!isTimerActive) _roundsState.value += 1
-                isTimerActive = true
+            }.also {
+                it.start()
+                if (!isTimerActive.value) _roundsState.value += 1
+                isTimerActive.value = true
             }
         }
     }
 
     fun onCancelTimer(reset: Boolean = false) {
-        try {
-            timer.cancel()
-        } catch (_: UninitializedPropertyAccessException) {
-//            Handle better the timer error
-        }
-        if (!isTimerActive || reset) {
+        timer?.cancel()
+        timer = null
+        if (!isTimerActive.value || reset) {
             _timerValue.value = _timerTypeState.value.timeToMillis()
         }
-        isTimerActive = false
-    }
-
-    private fun onResetTime() {
-        if (isTimerActive) {
-            onCancelTimer()
-            onStartTimer()
-        }
+        isTimerActive.value = false
     }
 
     fun onUpdateType(timerType: TimerTypeEnum) {
@@ -77,14 +67,17 @@ class HomeScreenViewModel : ViewModel() {
 
     fun onIncreaseTime() {
         _timerValue.value += ONE_MIN_IN_MILLIS
-        onResetTime()
+        if (isTimerActive.value) {
+            onStartTimer()
+        }
     }
 
     fun onDecreaseTime() {
         _timerValue.value -= ONE_MIN_IN_MILLIS
-        onResetTime()
         if (_timerValue.value < 0) {
             onCancelTimer()
+        } else if (isTimerActive.value) {
+            onStartTimer()
         }
     }
 
