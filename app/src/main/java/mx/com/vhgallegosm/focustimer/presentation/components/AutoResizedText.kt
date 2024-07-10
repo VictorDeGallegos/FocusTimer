@@ -1,7 +1,6 @@
 package mx.com.vhgallegosm.focustimer.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,12 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import mx.com.vhgallegosm.focustimer.presentation.theme.FocusTimerTheme
+import mx.com.vhgallegosm.focustimer.presentation.theme.Typography
 
 @Composable
 fun AutoResizedText(
     modifier: Modifier = Modifier,
     text: String,
-    textStyle: TextStyle = MaterialTheme.typography.displayLarge,
+    textStyle: TextStyle = Typography.displayLarge
 ) {
     var timeTextStyle by remember { mutableStateOf(textStyle) }
     val fontSizeFactor = 0.95
@@ -36,17 +36,10 @@ fun AutoResizedText(
     )
 }
 
-// 1-Preview Annotation
-@Preview(
-    name = "AutoResizedTextPreview",
-    showBackground = true,
-)
-// 2- Composable for the preview
+@Preview(showBackground = true)
 @Composable
 fun AutoResizedTextPreview() {
-//    3-Theme
     FocusTimerTheme {
-//        4-Composable to preview
         AutoResizedText(
             text = "Focus Timer"
         )

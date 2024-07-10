@@ -2,7 +2,7 @@ package mx.com.vhgallegosm.focustimer.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-val primaryDark = Color(0xFF1A1A1A)
-val primaryLight = Color(0xFFFFFFFF)
-val gray = Color(0xFF9E9E9E)
-val lightGray = Color(0xFFE0E0E0)
+val primaryBlack = Color(0XFF000000)
+val primaryWhite = Color(0xFFFFFFFF)
+val gray = Color(0XFF888888)
+val lightGray = Color(0XFFCCCCCC)

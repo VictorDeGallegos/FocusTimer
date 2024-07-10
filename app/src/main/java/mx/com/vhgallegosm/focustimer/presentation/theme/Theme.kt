@@ -12,24 +12,28 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = primaryLight,
+    primary = primaryWhite,
     secondary = gray,
     tertiary = lightGray,
-    surface = primaryDark,
-    background = primaryDark
+    surface = primaryBlack,
+    background = primaryBlack
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = primaryLight,
+    primary = primaryBlack,
     secondary = gray,
     tertiary = lightGray,
-    surface = primaryLight,
-    background = primaryLight
+    surface = primaryWhite,
+    background = primaryWhite
 )
 
 private val LocalDimens = staticCompositionLocalOf { DefaultDimens }
@@ -47,7 +51,7 @@ fun ProvideDimens(
 fun FocusTimerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     windowSize: WindowWidthSizeClass = WindowWidthSizeClass.Compact,
     content: @Composable () -> Unit
 ) {
@@ -60,11 +64,21 @@ fun FocusTimerTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.primary.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+        }
+    }
 
-    val dimensions =
-        if (windowSize == WindowWidthSizeClass.Compact) TabletDimens else DefaultDimens
+    val dimensions = if (windowSize > WindowWidthSizeClass.Compact)
+        TabletDimens
+    else
+        DefaultDimens
 
-    ProvideDimens(dimensions) {
+    ProvideDimens(dimens = dimensions) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = Typography,

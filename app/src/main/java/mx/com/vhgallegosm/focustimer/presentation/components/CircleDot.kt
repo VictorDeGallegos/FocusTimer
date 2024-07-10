@@ -16,7 +16,6 @@ import mx.com.vhgallegosm.focustimer.presentation.theme.FocusTimerTheme
 @Composable
 fun CircleDot(
     color: Color = MaterialTheme.colorScheme.primary,
-    size: Dp,
     modifier: Modifier = Modifier
 ) {
     Box {
@@ -43,7 +42,6 @@ fun CircleDotPreview() {
         //        4-Composable to preview
         CircleDot(
             color = MaterialTheme.colorScheme.primary,
-            size = FocusTimerTheme.dimens.iconSizeSmall
         )
     }
 }
